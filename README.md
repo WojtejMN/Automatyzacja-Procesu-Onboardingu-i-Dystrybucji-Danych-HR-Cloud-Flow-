@@ -28,37 +28,20 @@ Office 365 Outlook (komunikacja wewnętrzna i powiadomienia e-mail).
 
 ⚙️ Architektura i Przepływ Procesu (System Architecture)
 
-Nowy plik Excel (.xlsx) w folderze 'Nowe_Wnioski'                 
-                     ▼
-        [Wyzwalacz: OneDrive Trigger]
-                      │
-                      ▼
-       [Warunek: Filtrowanie nazwy pliku] (Zabezpieczenie przed procesowaniem niechcianych plików)
-                      │
-         ┌────────────┴────────────┐
-         ▼ (Prawda)                ▼ (Fałsz)
-[Odczyt danych z Excela]     [Zakończenie pracy bota]
-(Dynamiczne ID + Tabela_Nowy)
-                      │
-                      ▼
-           [Warunek: Analiza Działu]
-         ┌────────────┴────────────┐
-         ▼ (IT / Analiza Danych)   ▼ (Inne Działy)
-[Mail do IT: Specjalistyczny]  [Mail do IT: Standardowy]
-(Licencje Python/SQL/RPA)    (Podstawowy pakiet biurowy)
-         └────────────┬────────────┘
-                      │
-                      ▼
-    [Aktualizacja Bazy Głównej (Excel)] 
- (Dopisanie wiersza ze statusem "W toku")
-                      │
-                      ▼
-[Wysyłka spersonalizowanego regulaminu PDF do pracownika]
-
+[Nowy plik Excel (.xlsx) w folderze 'Nowe_Wnioski']  
+--->   [Wyzwalacz: OneDrive Trigger] 
+--->   [Warunek: Filtrowanie nazwy pliku] (Zabezpieczenie przed procesowaniem niechcianych plików) 
+--->(Prawda) [Odczyt danych z Excela](Dynamiczne ID + Tabela_Nowy)
+--->(Fałsz)  [Zakończenie pracy bota]
+--->   [Warunek: Analiza Działu]
+--->(IT / Analiza Danych) [Mail do IT: Specjalistyczny] (Licencje Python/SQL/RPA)
+--->(Inne Działy) [Mail do IT: Standardowy] (Podstawowy pakiet biurowy)
+--->   [Aktualizacja Bazy Głównej (Excel)]  (Dopisanie wiersza ze statusem "W toku")
+--->   [Wysyłka spersonalizowanego regulaminu PDF do pracownika]
 
 🚀 Kluczowe Rozwiązania Techniczne i Funkcje (Hard Skills)
 
-1. Dynamiczne Przetwarzanie Plików (Dynamic File Handling)
+1. Dynamiczne Przetwarzanie Plików (Dynamic File Handling) 
 
 Zamiast twardego kodowania ścieżek dostępu, przepływ wykorzystuje metadane wyzwalacza chmurowego (File Identifier). Bot jest w stanie otworzyć i sprocesować dowolny plik spełniający kryteria nazewnictwa, pobierając jego unikalne ID w czasie rzeczywistym.
 
