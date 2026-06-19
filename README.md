@@ -28,9 +28,8 @@ Office 365 Outlook (komunikacja wewnętrzna i powiadomienia e-mail).
 
 ⚙️ Architektura i Przepływ Procesu (System Architecture)
 
-[Nowy plik Excel (.xlsx) w folderze 'Nowe_Wnioski'] 
-                      │
-                      ▼
+Nowy plik Excel (.xlsx) w folderze 'Nowe_Wnioski'                 
+                     ▼
         [Wyzwalacz: OneDrive Trigger]
                       │
                       ▼
