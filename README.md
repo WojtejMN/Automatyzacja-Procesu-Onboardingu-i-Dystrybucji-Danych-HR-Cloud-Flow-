@@ -1,0 +1,2 @@
+# Automatyzacja-Procesu-Onboardingu-i-Dystrybucji-Danych-HR-Cloud-Flow-
+Rozwiązanie klasy Business Process Automation (BPA) zrealizowane w ekosystemie Microsoft Power Platform. Projekt automatyzuje powtarzalny proces rejestracji nowych pracowników, kategoryzacji sprzętowej na podstawie działu oraz dystrybucji zadań do odpowiednich jednostek wsparcia (IT/BHP), eliminując pracę ręczną i ryzyko błędów ludzkich.
