@@ -27,7 +27,7 @@ Excel Online (Business API) (dynamiczny odczyt tabelaryczny i aktualizacja baz d
 Office 365 Outlook (komunikacja wewnętrzna i powiadomienia e-mail).
 
 ⚙️ Architektura i Przepływ Procesu (System Architecture)
-
+![Screen Przepływów](image.png)
 [Nowy plik Excel (.xlsx) w folderze 'Nowe_Wnioski']  
 --->   [Wyzwalacz: OneDrive Trigger] 
 --->   [Warunek: Filtrowanie nazwy pliku] (Zabezpieczenie przed procesowaniem niechcianych plików) 
