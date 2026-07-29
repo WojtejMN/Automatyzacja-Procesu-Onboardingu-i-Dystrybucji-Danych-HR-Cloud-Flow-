@@ -1,80 +1,30 @@
-Automatyzacja Procesu Onboardingu i Dystrybucji Danych (HR Cloud Flow)
+# HR Onboarding & Data Distribution Cloud Pipeline 🚀
 
-Rozwiązanie klasy Business Process Automation (BPA) zrealizowane w ekosystemie Microsoft Power Platform. Projekt automatyzuje powtarzalny proces rejestracji nowych pracowników, kategoryzacji sprzętowej na podstawie działu oraz dystrybucji zadań do odpowiednich jednostek wsparcia (IT/BHP), eliminując pracę ręczną i ryzyko błędów ludzkich (human error).
+[![Power Automate](https://img.shields.io/badge/Power%20Automate-0078D4?style=for-the-badge&logo=microsoftpowerautomate&logoColor=white)](https://powerautomate.microsoft.com/)
+[![SharePoint](https://img.shields.io/badge/SharePoint-036C70?style=for-the-badge&logo=microsoftsharepoint&logoColor=white)](https://www.microsoft.com/sharepoint)
+[![Microsoft Teams](https://img.shields.io/badge/Microsoft%20Teams-6264A7?style=for-the-badge&logo=microsoftteams&logoColor=white)](https://www.microsoft.com/teams)
+[![Outlook](https://img.shields.io/badge/Microsoft%20Outlook-0078D4?style=for-the-badge&logo=microsoftoutlook&logoColor=white)](https://outlook.live.com/)
 
-📋 Opis Problemu Biznesowego (Business Case)
+Automatyczny system bezobsługowego wdrażania nowych pracowników (*HR Onboarding*) oraz wielokanałowej dystrybucji danych personalnych, zbudowany w oparciu o chmurowe przepływy **Power Automate Cloud Flows**.
 
-W tradycyjnym modelu dział HR po zatrudnieniu nowego pracownika musiał ręcznie:
+---
 
-Odczytać dane z formularza zgłoszeniowego.
+## 📌 Problem Biznesowy & Rozwiązanie
 
-Ocenić, jakiego sprzętu i licencji potrzebuje pracownik (np. specjalistycznych licencji deweloperskich dla inżynierów danych).
+Ręczne wprowadzanie danych nowych pracowników, rozsyłanie wniosków do działu IT i sprzętowego oraz wysyłanie pakietów powitalnych generuje znaczne koszty czasowe i ryzyko przeoczenia kluczowych kroków w procesie onboardingowym. 
 
-Wysłać ręczne maile do działu IT oraz BHP.
+**HR Onboarding Cloud Pipeline** automatyzuje cały proces: od momentu rejestracji nowego zgłoszenia w systemie HR / na liście SharePoint, przez akceptację przełożonego i automatyczne przygotowanie kont/sprzętu, aż po dystrybucję powiadomień przez Microsoft Teams i Outlook.
 
-Przepisać dane do głównego rejestru zatrudnienia w arkuszu Excel.
+---
 
-Wąskie gardła (Bottlenecks): Opóźnienia w przygotowaniu stanowisk pracy, błędy w przepisywaniu danych, brak spójności w archiwizacji dokumentacji oraz marnowanie czasu wykwalifikowanych pracowników HR na zadania administracyjne.
+## 🏗️ Architektura Procesu
 
-🛠️ Wykorzystane Technologie
-
-Power Automate Cloud Flows (orkiestracja procesu, wyzwalacze zdarzeniowe, logika warunkowa).
-
-OneDrive for Business / SharePoint (repozytorium dokumentów i bezpieczna strefa wymiany danych).
-
-Excel Online (Business API) (dynamiczny odczyt tabelaryczny i aktualizacja baz danych strukturalnych).
-
-Office 365 Outlook (komunikacja wewnętrzna i powiadomienia e-mail).
-
-⚙️ Architektura i Przepływ Procesu (System Architecture)
-![Screen Przepływów](image.png)
-
-
-[Nowy plik Excel (.xlsx) w folderze 'Nowe_Wnioski']  
---->   [Wyzwalacz: OneDrive Trigger] 
---->   [Warunek: Filtrowanie nazwy pliku] (Zabezpieczenie przed procesowaniem niechcianych plików) 
---->(Prawda) [Odczyt danych z Excela](Dynamiczne ID + Tabela_Nowy)
---->(Fałsz)  [Zakończenie pracy bota]
---->   [Warunek: Analiza Działu]
---->(IT / Analiza Danych) [Mail do IT: Specjalistyczny] (Licencje Python/SQL/RPA)
---->(Inne Działy) [Mail do IT: Standardowy] (Podstawowy pakiet biurowy)
---->   [Aktualizacja Bazy Głównej (Excel)]  (Dopisanie wiersza ze statusem "W toku")
---->   [Wysyłka spersonalizowanego regulaminu PDF do pracownika]
-
-🚀 Kluczowe Rozwiązania Techniczne i Funkcje (Hard Skills)
-
-1. Dynamiczne Przetwarzanie Plików (Dynamic File Handling) 
-
-Zamiast twardego kodowania ścieżek dostępu, przepływ wykorzystuje metadane wyzwalacza chmurowego (File Identifier). Bot jest w stanie otworzyć i sprocesować dowolny plik spełniający kryteria nazewnictwa, pobierając jego unikalne ID w czasie rzeczywistym.
-
-2. Bezpieczna Integracja z API Excela (Table-Level Operations)
-
-Odczyt i zapis danych realizowany jest wyłącznie na poziomie ustrukturyzowanych obiektów tabeli Excel (Table Object), co gwarantuje spójność typów danych i odporność na uszkodzenia struktury arkusza.
-
-3. Zabezpieczenie Procesu (Input Validation & Filtering)
-
-Wprowadzono filtrację na poziomie bramki wejściowej (warunek początkowy sprawdzający maskę nazwy pliku: starts with 'Nowy_Pracownik_'). Zapobiega to przypadkowemu uruchomieniu bota dla plików o innej strukturze.
-
-🧠 Wyzwania Techniczne i Rozwiązane Problemy (Troubleshooting & Debugging)
-
-Podczas wdrożenia i testów rozwiązano kluczowe problemy techniczne, co pozwoliło zoptymalizować działanie bota pod kątem niezawodności w środowisku produkcyjnym:
-
-Błąd 404: "Nie znaleziono tabeli o nazwie Tabela_Nowy"
-
-Przyczyna: Power Automate odczytywał strukturę pliku jako surowy arkusz roboczy, a nie sformatowany obiekt tabeli bazodanowej w Excelu.
-
-Rozwiązanie: Zaimplementowano ustrukturyzowane formatowanie tabeli (Ctrl + T) oraz nadano unikalny identyfikator obiektu bezpośrednio we właściwościach projektu tabeli w Excel Online.
-
-Konflikty dostępu do plików (File Locking & Concurrency)
-
-Przyczyna: Występowanie błędu blokady pliku przez OneDrive podczas jednoczesnej próby edycji pliku przez użytkownika i bota.
-
-Rozwiązanie: Przełączono formaty wejściowe z archiwalnych .xls na nowoczesne .xlsx w celu lepszej obsługi metadanych oraz zaimplementowano zasadę automatycznego zamykania aktywnych sesji przed uruchomieniem procesu automatyzacji.
-
-📈 Wartość Biznesowa i ROI (Return on Investment)
-
-Oszczędność czasu (Time Saved): Skrócenie czasu procesowania jednego wniosku onboardingowego z 15 minut (praca ręczna) do mniej niż 10 sekund (czas wykonania bota).
-
-Redukcja błędów (Error Reduction): 100% poprawności przy przepisywaniu danych do bazy głównej – eliminacja ryzyka literówek w nazwiskach czy adresach e-mail.
-
-Szybkość operacyjna (Operational Speed): Natychmiastowe (w czasie rzeczywistym) powiadomienie działu IT o potrzebie przygotowania sprzętu, co skraca czas wdrożenia nowego pracownika i zapobiega jego przestojom w pierwszym dniu pracy.
+```mermaid
+graph TD
+    A[Formularz HR / Lista SharePoint] -->|Trigger: New Item| B[Power Automate Cloud Flow]
+    B -->|Walidacja & Formatowanie| C{Zgoda Przełożonego?}
+    C -->|Tak| D[Weryfikacja IT / Przygotowanie Sprzętu]
+    C -->|Nie| E[Anulowanie & Odpowiedź do HR]
+    D -->|Karta Adaptive Card| F[Powiadomienie MS Teams]
+    D -->|Personalizowany e-mail| G[Wiadomość Powitalna Outlook]
+    D -->|Update statusu| H[(Centralny Rejestr HR / Dataverse)]
